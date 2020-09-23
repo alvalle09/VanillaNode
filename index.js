@@ -23,12 +23,16 @@
     const queryStringObject = parsedUrl.query;
 
     // Get the HTTP Method
-    var method = req.method.toLowerCase();
+    const method = req.method.toLowerCase();
+
+    // Get headers as an objec
+    const headers = req.headers;
 
     // Send the response
     res.end('Hola Mundo!!!\n');
 
-   // Log the request path
+   // Log the request path ( objects are passed as separate parms in console log)
+   console.log('Request received with headers:', headers);
    console.log('Request received on path:' + trimmedPath + ' with method:' + method + ' and query parms: ', queryStringObject);
     
  });
