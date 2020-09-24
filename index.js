@@ -38,6 +38,34 @@ const server = http.createServer(function (req, res) {
   req.on("end", function () {
     buffer += decoder.end();
 
+    // Choose handler, if not found, use Not Found handler
+    const chosenHandler = typeof(router[trimmedPath]) !== 'undefined' ? router[trimmedPath] : handlers.notFound;
+
+    // construct data obj to send to handler
+    const data {
+      'trimmedPath' : trimmedPath,
+      'queryStringObject' : queryStringObject,
+      'method' : method,
+      'headers' : headers,
+      'payload' : buffer
+    }
+
+    // route the request to the handler specified in the router
+    chosenHandler(data, function(statusCode, payload){
+      // use status code called backed by handler, or default to 200
+      statusCode = typeof(statusCode) == 'number' ? statusCode : 200;
+
+      // use payload called back by the handler, or default to empty object
+      payload = typeof(payload) == 'object' : payload : {};
+
+      // convert payload to a string
+      const payloadString = JSON.stringify(payload);
+
+      // Return the response
+      
+
+    });
+
     // Send the response
     res.end("Hola Mundo!!!\n");
 
@@ -67,7 +95,6 @@ handlers.sample = function(data, callback){
 handlers.notFound = function(data, callback){
   callback(404);
 };
-
 
 // setup request router
 const router = {
