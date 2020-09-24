@@ -42,7 +42,7 @@ const server = http.createServer(function (req, res) {
     const chosenHandler = typeof(router[trimmedPath]) !== 'undefined' ? router[trimmedPath] : handlers.notFound;
 
     // construct data obj to send to handler
-    const data {
+    const data = {
       'trimmedPath' : trimmedPath,
       'queryStringObject' : queryStringObject,
       'method' : method,
@@ -56,23 +56,23 @@ const server = http.createServer(function (req, res) {
       statusCode = typeof(statusCode) == 'number' ? statusCode : 200;
 
       // use payload called back by the handler, or default to empty object
-      payload = typeof(payload) == 'object' : payload : {};
+      payload = typeof(payload) == 'object' ? payload : {};
 
       // convert payload to a string
       const payloadString = JSON.stringify(payload);
 
-      // Return the response
-      
+      // Send the response
+      res.writeHead(statusCode);
+      res.end(payloadString);
 
+      console.log('Returning this response: ', statusCode, payloadString);
     });
 
-    // Send the response
-    res.end("Hola Mundo!!!\n");
+    
 
     // Log the request path ( objects are passed as separate parms in console log)
-    console.log('Request received with headers:', headers);
-    console.log('Request received with payload:', buffer);
-    console.log('Request received on path:' + trimmedPath + ' with method:' + method + ' and query parms: ', queryStringObject);
+    // console.log('Request received with headers:', headers);
+    // console.log('Request received on path:' + trimmedPath + ' with method:' + method + ' and query parms: ', queryStringObject);
   });
 
 });
