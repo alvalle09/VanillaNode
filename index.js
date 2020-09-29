@@ -67,9 +67,7 @@ const server = http.createServer(function (req, res) {
       res.end(payloadString);
 
       console.log('Returning this response: ', statusCode, payloadString);
-    });
-
-    
+    });    
 
     // Log the request path ( objects are passed as separate parms in console log)
     // console.log('Request received with headers:', headers);
