@@ -3,8 +3,6 @@
 *
 */
 
-const { type } = require("os");
-
 // Container for all the enviornments
 let environments = {};
 
@@ -25,3 +23,6 @@ var currentEnvironment = typeof(process.env.NODE_ENV) == 'string' ? process.env.
 
 // Check that the current env is one of the environments aboice, if not default to staging
 var environmentToExport = typeof(environments[currentEnvironment]) == 'object' ? environments[currentEnvironment] : environments.staging;
+
+// Export the module
+module.exports = environmentToExport;
